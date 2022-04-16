@@ -1,0 +1,42 @@
+<nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+<div *ngIf="!isLoading" style="margin-top: 15px;">
+  <nz-card  [nzTitle]="'Commande ' + (i + 1) "  *ngFor="let commande of listeCommande; let i = index ">
+    <div style="font-size:14px;color:rgba(0, 0, 0, 0.85);margin-bottom:16px;font-weight: 500;">
+      <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="6">Date commande: {{commande.dateCommande}}</div>
+        <div nz-col class="gutter-row" [nzSpan]="6">Date retrait: {{commande.dateRetrait}}</div>
+        <div nz-col class="gutter-row" [nzSpan]="6">Avance: {{commande.avance}} FCFA</div>
+        <div nz-col class="gutter-row" [nzSpan]="6">Reste: {{commande.reste}} FCFA</div>
+      </div>
+      <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="6">Cout total: {{commande.coutTotal}} FCFA</div>
+        <div nz-col class="gutter-row" [nzSpan]="18">Notes: {{commande.notes}}</div>
+      </div>
+    </div>
+    <nz-card nzType="inner" nzTitle="Mesures">
+      <nz-card-tab>
+        <nz-tabset nzSize="large">
+          <nz-tab nzTitle="Chemise">
+            <div nz-row >
+              <div *ngFor="let mesure of commande.mesures| mesureFilter: 'CHEMISE'"
+                   nz-col class="gutter-row" [nzSpan]="6">{{mesure.typeMesure}}: {{mesure.valeur}}</div>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Pantalon">
+            <div nz-row >
+              <div *ngFor="let mesure of commande.mesures| mesureFilter: 'PANTALON'"
+                   nz-col class="gutter-row" [nzSpan]="6">{{mesure.typeMesure}}: {{mesure.valeur}}</div>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Veste">
+            <div nz-row >
+              <div *ngFor="let mesure of commande.mesures| mesureFilter: 'VESTE'"
+                   nz-col class="gutter-row" [nzSpan]="6">{{mesure.typeMesure}}: {{mesure.valeur}}</div>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </nz-card-tab>
+    </nz-card>
+  </nz-card>
+</div>
+

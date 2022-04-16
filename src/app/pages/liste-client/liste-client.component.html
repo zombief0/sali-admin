@@ -1,0 +1,46 @@
+<nz-upload
+  [nzAction]="urlBaseExcel"
+  (nzChange)="handleChange($event)"
+>
+  <button nz-button>
+    <i nz-icon nzType="upload"></i>
+    Charger fichier excel
+  </button>
+</nz-upload>
+<nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+<nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
+  <thead>
+  <tr>
+    <th nzCustomFilter>
+      Noms
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>Prenom</th>
+    <th>Téléphone</th>
+    <th>Email</th>
+    <th>Anniversaire</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of nzTable.data">
+    <td>{{ data.noms }}</td>
+    <td>{{ data.prenoms }}</td>
+    <td>{{ data.telephone }}</td>
+    <td>{{ data.email }}</td>
+    <td>{{ data.anniversaire }}</td>
+    <td > <a [routerLink]="['/client/' + data.id + '/commandes']">Commandes</a></td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue"/>
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Rechercher</button>
+      <button nz-button nzSize="small" (click)="reset()">Réinitialiser</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
