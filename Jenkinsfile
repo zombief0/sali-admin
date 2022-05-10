@@ -26,8 +26,8 @@ node {
        }
 
        stage('Docker run') {
-//           sh "docker container stop recipe-web"
-//           sh "docker container rm recipe-web"
+          sh "docker container stop sali-admin"
+          sh "docker container rm sali-admin"
           sh "docker container run -d -e VIRTUAL_HOST=adminsali.normanmbouende.com --name sali-admin zombief0/sali-admin:${commit_id}"
           sh "docker image prune -a -f"
        }
