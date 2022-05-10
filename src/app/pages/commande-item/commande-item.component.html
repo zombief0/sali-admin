@@ -1,0 +1,50 @@
+<nz-card style="margin-top: 15px;" *ngIf="commande" [nzTitle]="'Commande ' + (index + 1) ">
+  <div style="font-size:14px;color:rgba(0, 0, 0, 0.85);margin-bottom:16px;font-weight: 500;">
+    <app-add-edit-commande [commande]="commande" [editMode]="1"></app-add-edit-commande>
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="6">Date commande: {{commande.dateCommande}}</div>
+      <div nz-col class="gutter-row" [nzSpan]="6">Date retrait: {{commande.dateRetrait}}</div>
+      <div nz-col class="gutter-row" [nzSpan]="6">Avance: {{commande.avance}} FCFA</div>
+      <div nz-col class="gutter-row" [nzSpan]="6">Reste: {{commande.reste}} FCFA</div>
+    </div>
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="6">Coût total: {{commande.coutTotal}} FCFA</div>
+      <div nz-col class="gutter-row" [nzSpan]="18">Notes: {{commande.notes}}</div>
+    </div>
+    <app-add-edit-mesure [mesure]="null" [editMode]="0" [idCommande]="commande.id">
+
+    </app-add-edit-mesure>
+  </div>
+
+  <nz-card nzType="inner" nzTitle="Mesures">
+    <nz-card-tab>
+      <nz-tabset nzSize="large" [(nzSelectedIndex)]="index1">
+        <nz-tab nzTitle="Chemise">
+
+        </nz-tab>
+        <nz-tab nzTitle="Pantalon">
+
+        </nz-tab>
+        <nz-tab nzTitle="Veste">
+
+        </nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+    <div nz-row>
+      <div *ngFor="let mesure of commande.mesures| mesureFilter: index1"
+           nz-col class="gutter-row" [nzSpan]="6">
+        {{mesure.typeMesure}}: {{mesure.valeur}}
+        <a nz-dropdown [nzDropdownMenu]="menu">
+          <i nz-icon nzType="setting" nzTheme="fill"></i>
+          <i nz-icon nzType="down"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <app-add-edit-mesure [mesure]="mesure" [editMode]="1" [idCommande]="commande.id"></app-add-edit-mesure>
+            <li nz-menu-item>Supprimer</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+  </nz-card>
+</nz-card>

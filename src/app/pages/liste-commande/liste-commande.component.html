@@ -1,0 +1,55 @@
+<nz-breadcrumb *ngIf="!isLoading" style="margin-bottom: 8px;">
+  <nz-breadcrumb-item>Commandes</nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a>Liste des commandes</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+<app-add-commande-with-client *ngIf="!isLoading"></app-add-commande-with-client>
+<nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
+  <thead>
+  <tr>
+    <th>
+      Ids
+    </th>
+    <th nzCustomFilter>
+      Client
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>Date commande</th>
+    <th>Date retrait</th>
+    <th>Coût Total</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of nzTable.data">
+    <td>{{data.id}}</td>
+    <td>
+      <a [routerLink]="['/client/' + data.client.id + '/commandes/' + data.client.noms + '/'
+      + data.client.prenoms]">
+        {{ data.client.noms }} {{data.client.prenoms}}
+      </a>
+
+    </td>
+    <td>{{ data.dateCommande }}</td>
+    <td>{{ data.dateRetrait }}</td>
+    <td>{{ data.coutTotal }}</td>
+    <td><a [routerLink]="['/commande/' + data.id]">
+      Détails
+    </a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue"/>
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Rechercher</button>
+      <button nz-button nzSize="small" (click)="reset()">Réinitialiser</button>
+    </div>
+  </div>
+</nz-dropdown-menu>

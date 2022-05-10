@@ -1,0 +1,20 @@
+<nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+<nz-breadcrumb *ngIf="!isLoading">
+  <nz-breadcrumb-item>
+    <a routerLink="/commande">Commandes</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    {{commande.id}}
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a [routerLink]="['/client/' + commande.client.id
+    + '/commandes']">
+      {{commande.client.noms}} {{commande.client.prenoms}}
+    </a>
+
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<app-commande-item
+  *ngIf="!isLoading" [commande]="commande" [index]="0">
+
+</app-commande-item>

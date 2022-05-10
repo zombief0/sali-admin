@@ -5,12 +5,22 @@ import {Mesure} from "../../../models/mesure";
   name: 'mesureFilter'
 })
 export class MesureFilter implements PipeTransform{
-  transform(value: Mesure[], typeVetement: string): any {
-    if (!value || !typeVetement) {
+  transform(value: Mesure[], typeVetement: number): any {
+    if (!value) {
       return value;
     }
-    console.log(value);
-    return value.filter((mesure) => mesure.typeVetement === typeVetement);
+
+    if (!typeVetement) {
+      return value.filter((mesure) => mesure.typeVetement === 'CHEMISE');
+    }
+
+    if (typeVetement === 1) {
+      return value.filter((mesure) => mesure.typeVetement === 'PANTALON');
+    }
+
+    if (typeVetement === 2) {
+      return value.filter((mesure) => mesure.typeVetement === 'VESTE');
+    }
   }
 
 }

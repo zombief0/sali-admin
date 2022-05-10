@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Commande} from "../../../models/commande";
 import {CommandeService} from "../../../services/commande.service";
 import {ActivatedRoute} from "@angular/router";
-import {Mesure} from "../../../models/mesure";
+import {CommandesClient} from "../../../models/commandes-client";
 
 @Component({
   selector: 'app-client-commandes',
@@ -10,11 +10,8 @@ import {Mesure} from "../../../models/mesure";
   styleUrls: ['./client-commandes.component.css']
 })
 export class ClientCommandesComponent implements OnInit {
-  listeCommande: Commande[];
+  listeCommande: CommandesClient;
   isLoading = false;
-  listeMesurePantalon: Mesure[];
-  listeMesureVeste: Mesure[];
-  listeMesureChemise: Mesure[];
   constructor(private commandeService: CommandeService, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -42,7 +39,4 @@ export class ClientCommandesComponent implements OnInit {
     })
   }
 
-  getMesurePantalonCommande(): Mesure[] {
-    return this.listeCommande[0].mesures.filter((mesure) => mesure.typeMesure === 'PANTALON');
-  }
 }

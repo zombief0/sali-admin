@@ -20,7 +20,7 @@ export class ListeClientComponent implements OnInit {
   isLoading = false;
 
   constructor(private clientService: ClientService,
-              private msg: NzMessageService, private router: Router,) {
+              private msg: NzMessageService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -50,7 +50,10 @@ export class ListeClientComponent implements OnInit {
     console.log(this.searchValue);
 
     this.listOfDisplayData = this.listeClients
-      .filter((item: Client) => item.noms.includes(this.searchValue.toUpperCase()));
+      .filter((item: Client) => {
+          return (item.noms + ' ' + item.prenoms).includes(this.searchValue.toUpperCase());
+        }
+      );
   }
 
   handleChange(info: NzUploadChangeParam): void {
@@ -59,7 +62,9 @@ export class ListeClientComponent implements OnInit {
     }
     if (info.file.status === 'done') {
       this.msg.success(`${info.file.name} Chargement Réussi`);
-      location.reload();
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate(['/client']);
+      });
     } else if (info.file.status === 'error') {
       this.msg.error(`${info.file.name} Chargement échoué`);
     }

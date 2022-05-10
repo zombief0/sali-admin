@@ -1,0 +1,71 @@
+<button (click)="showModal()"  style="margin-top: 15px; margin-bottom: 8px;"
+        nz-button nzType="primary">
+  <i nz-icon nzType="plus-circle"></i>
+  Ajouter commande
+</button>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="'Ajouter commande'"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <form *nzModalContent nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="client">Client</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Ce champ est invalide">
+        <nz-select *ngIf="clients" nzShowSearch nzAllowClear style="width: 90% "
+                   formControlName="client" id="client">
+          <nz-option *ngFor="let client of clients"
+                     [nzLabel]="client.noms + ' ' + client.prenoms"
+                     [nzValue]="client.id"></nz-option>
+
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Date de la commande</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-date-picker style="width: 90% " formControlName="dateCommande"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Date du retrait</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-date-picker style="width: 90% " formControlName="dateRetrait"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="coutTotal">Coût total</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-input-number style="width: 90% " formControlName="coutTotal" [nzMin]="0"  [nzStep]="1" id="coutTotal"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="avance">Avance</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-input-number style="width: 90% " formControlName="avance" [nzMin]="0"
+                         [nzStep]="1" id="avance"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reste">Reste</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24">
+        <nz-input-number style="width: 90% " formControlName="reste" [nzMin]="0"
+                         [nzStep]="1" id="reste"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">Notes</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Email invalide">
+        <textarea formControlName="notes" nz-input style="width: 100% "
+                   nzAutosize></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

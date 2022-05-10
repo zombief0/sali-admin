@@ -1,0 +1,47 @@
+<i *ngIf="editMode == 1" nz-tooltip nzTooltipTitle="Éditer" nz-icon nzType="edit" nzTheme="fill" (click)="showModal()"
+   style="font-size: 30px; color: #ff9966;"></i>
+<button (click)="showModal()" *ngIf="editMode != 1" style="float: right"
+        nz-button nzType="primary">
+  <i nz-icon nzType="plus-circle"></i>
+  Ajouter
+</button>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="editMode == 1 ? 'Éditer client' : 'Ajouter client'"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <form *nzModalContent nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="noms">Noms</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ce champ est invalide">
+        <input nz-input formControlName="noms" id="noms"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="prenoms">Prénoms</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="prenoms" id="prenoms"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="telephone">Téléphone</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ce champ est invalide">
+        <input nz-input formControlName="telephone" id="telephone"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Email invalide">
+        <input nz-input formControlName="email" id="email"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="anniversaire">Anniversaire</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="anniversaire" id="anniversaire"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

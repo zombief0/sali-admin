@@ -1,12 +1,26 @@
-<nz-upload
-  [nzAction]="urlBaseExcel"
-  (nzChange)="handleChange($event)"
->
-  <button nz-button>
-    <i nz-icon nzType="upload"></i>
-    Charger fichier excel
-  </button>
-</nz-upload>
+<nz-breadcrumb style="margin-bottom: 8px;">
+  <nz-breadcrumb-item>Clients</nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    Liste des clients
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row>
+  <div nz-col class="gutter-row" [nzSpan]="8">
+    <nz-upload
+      [nzAction]="urlBaseExcel"
+      (nzChange)="handleChange($event)"
+    >
+      <button nz-button style="margin-bottom: 15px;">
+        <i nz-icon nzType="upload"></i>
+        Charger fichier excel
+      </button>
+    </nz-upload>
+  </div>
+  <div nz-col class="gutter-row" [nzSpan]="8" nzOffset="8">
+    <app-add-edit-client [editMode]="0" [client]="null"></app-add-edit-client>
+  </div>
+</div>
+
 <nz-spin nzSimple *ngIf="isLoading"></nz-spin>
 <nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
   <thead>
@@ -31,7 +45,15 @@
     <td>{{ data.telephone }}</td>
     <td>{{ data.email }}</td>
     <td>{{ data.anniversaire }}</td>
-    <td > <a [routerLink]="['/client/' + data.id + '/commandes']">Commandes</a></td>
+    <td>
+
+      <a style="margin-right: 10px"
+         [routerLink]="['/client/' + data.id + '/commandes']">
+        <i nz-tooltip nzTooltipTitle="Commandes" nz-icon nzType="schedule" nzTheme="fill"
+           style="font-size: 30px; color: #08c;"></i>
+      </a>
+      <app-add-edit-client [client]="data" [editMode]="1"></app-add-edit-client>
+    </td>
   </tr>
   </tbody>
 </nz-table>
