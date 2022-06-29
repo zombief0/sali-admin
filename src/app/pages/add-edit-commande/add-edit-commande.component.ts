@@ -1,10 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Commande} from "../../models/commande";
 import {Router} from "@angular/router";
 import {CommandeService} from "../../services/commande.service";
 import {ClientService} from "../../services/client.service";
 import {Client} from "../../models/client";
+import {NzFormTooltipIcon} from "ng-zorro-antd/form";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-add-edit-commande',
@@ -18,23 +20,32 @@ export class AddEditCommandeComponent implements OnInit {
   @Input() commande: Commande;
   @Input() editMode: number;
   @Input() selectedClient: Client;
+  tooltipIcon: NzFormTooltipIcon = {
+    type: 'info-circle',
+    theme: 'twotone'
+  };
   constructor(private fb: FormBuilder, private router: Router,
-              private commandeService: CommandeService) { }
+              private commandeService: CommandeService, private msg: NzMessageService) { }
 
   ngOnInit(): void {
     if (this.editMode != 1) {
       this.validateForm = this.fb.group({
         dateCommande: [null, [Validators.required]],
-        dateRetrait: [null, [Validators.required]],
+        echeance: ['HNONE', [Validators.required]],
+        mesureStandards: [false, [Validators.required]],
+        dateRetrait: [null],
         avance: [null],
         reste: [null],
         coutTotal: [null],
         notes: [null],
       });
     } else {
+
       this.validateForm = this.fb.group({
         dateCommande: [this.commande.dateCommande, [Validators.required]],
-        dateRetrait: [this.commande.dateRetrait, [Validators.required]],
+        echeance: [this.commande.echeance, [Validators.required]],
+        useMesureStandard: [this.commande.useMesureStandard, [Validators.required]],
+        dateRetrait: [this.commande.dateRetrait],
         avance: [this.commande.avance],
         reste: [this.commande.reste],
         coutTotal: [this.commande.coutTotal],
@@ -53,6 +64,16 @@ export class AddEditCommandeComponent implements OnInit {
     this.isOkLoading = true;
     if (this.validateForm.valid) {
 
+      if (this.validateForm.value.coutTotal != null
+        && this.validateForm.value.avance != null) {
+        this.validateForm.value.reste = this.validateForm.value.coutTotal - this.validateForm.value.avance;
+      }
+
+      if (this.validateForm.value.useMesureStandard && !this.selectedClient.existMesureStandard) {
+        this.msg.error('Ce client ne possède pas de mesures standards' );
+        this.isOkLoading = false;
+        return;
+      }
       if (this.editMode == 1) {
         const id = this.commande.id;
         this.commande = this.validateForm.value;
@@ -89,6 +110,7 @@ export class AddEditCommandeComponent implements OnInit {
         })
       }
     } else {
+      this.isOkLoading = false;
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
@@ -101,7 +123,6 @@ export class AddEditCommandeComponent implements OnInit {
   showModal(): void {
     this.isVisible = true;
   }
-
 
 
 }

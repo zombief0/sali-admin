@@ -13,6 +13,8 @@ export class AddEditMesureComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
   validateForm!: FormGroup;
+  typeMesureChemise = ['AB', 'B', 'C', 'CA', 'CD', 'COL',
+    'E', 'L', 'LM', 'P', 'T', 'TM', 'V', 'm'];
   @Input() editMode: number;
   @Input() mesure: Mesure;
   @Input() idCommande: number;
@@ -86,6 +88,7 @@ export class AddEditMesureComponent implements OnInit {
         })
       }
     } else {
+      this.isOkLoading = false;
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
@@ -93,5 +96,9 @@ export class AddEditMesureComponent implements OnInit {
         }
       });
     }
+  }
+
+  loadType() {
+
   }
 }

@@ -11,4 +11,6 @@ export class Commande {
   mesures: Mesure[];
   notes: string;
   reste: number;
+  echeance: string;
+  useMesureStandard: boolean;
 }

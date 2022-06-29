@@ -7,4 +7,6 @@ export class Client {
   noms:	string;
   prenoms:	string;
   telephone:	string;
+  sexe: string;
+  existMesureStandard: boolean;
 }

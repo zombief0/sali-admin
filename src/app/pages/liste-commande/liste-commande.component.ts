@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommandeService} from "../../services/commande.service";
 import {Commande} from "../../models/commande";
 import {Client} from "../../models/client";
+import {environment} from "../../../environments/environment";
+import {NzUploadChangeParam} from "ng-zorro-antd/upload";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-liste-commande',
@@ -14,7 +18,11 @@ export class ListeCommandeComponent implements OnInit {
   isLoading = false;
   listOfDisplayData = [];
   visible = false;
-  constructor(private commandeService: CommandeService) { }
+  urlBaseExcel = environment.baseApiUrl + "excel";
+
+  constructor(private commandeService: CommandeService,
+              private msg: NzMessageService, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -41,7 +49,44 @@ export class ListeCommandeComponent implements OnInit {
 
     this.listOfDisplayData = this.commandes
       .filter((item: Commande) => {
-        return (item.client.noms+' ' +item.client.prenoms).includes(this.searchValue.toUpperCase());
+        return (item.client.noms + ' ' + item.client.prenoms).includes(this.searchValue.toUpperCase());
       });
+  }
+
+  handleChange(info: NzUploadChangeParam): void {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      this.msg.success(`${info.file.name} Chargement Réussi`);
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate(['/commande']);
+      });
+    } else if (info.file.status === 'error') {
+      this.msg.error(`${info.file.name} Chargement échoué`);
+    }
+  }
+
+  getBackgroundColor(commande: Commande): string {
+    let dateEcheance = new Date(commande.dateCommande);
+    let dateActuelle = new Date();
+    switch (commande.echeance) {
+      case 'H24':
+        dateEcheance = new Date(dateEcheance.getTime() + 24 * 3600 * 1000);
+        if (dateActuelle.getTime() <= dateEcheance.getTime())
+          return 'tomato';
+        break;
+      case 'H48':
+        dateEcheance = new Date(dateEcheance.getTime() + 48 * 3600 * 1000);
+        if (dateActuelle.getTime() <= dateEcheance.getTime())
+          return '#FFFE71';
+        break;
+      case 'H72':
+        dateEcheance = new Date(dateEcheance.getTime() + 72 * 3600 * 1000);
+        if (dateActuelle.getTime() <= dateEcheance.getTime())
+          return '#299617';
+        break;
+    }
+    return 'white';
   }
 }

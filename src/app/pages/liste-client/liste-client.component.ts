@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Client} from "../../models/client";
 import {ClientService} from "../../services/client.service";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {NzUploadChangeParam} from "ng-zorro-antd/upload";
-import {Router} from "@angular/router";
-import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-liste-client',
@@ -13,14 +9,12 @@ import {environment} from "../../../environments/environment";
 })
 export class ListeClientComponent implements OnInit {
   searchValue = '';
-  urlBaseExcel = environment.baseApiUrl + "excel";
   visible = false;
   listeClients: Client[];
   listOfDisplayData = [];
   isLoading = false;
 
-  constructor(private clientService: ClientService,
-              private msg: NzMessageService, private router: Router) {
+  constructor(private clientService: ClientService) {
   }
 
   ngOnInit(): void {
@@ -56,17 +50,4 @@ export class ListeClientComponent implements OnInit {
       );
   }
 
-  handleChange(info: NzUploadChangeParam): void {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      this.msg.success(`${info.file.name} Chargement Réussi`);
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate(['/client']);
-      });
-    } else if (info.file.status === 'error') {
-      this.msg.error(`${info.file.name} Chargement échoué`);
-    }
-  }
 }

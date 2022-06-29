@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       response => {
         console.log(response);
         this.isLoading = false;
-        this.router.navigate(['/client']);
+        this.router.navigate(['/commande']);
       },
       errorMessage => {
         this.isLoading = false;

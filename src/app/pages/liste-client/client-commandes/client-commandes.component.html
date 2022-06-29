@@ -10,6 +10,7 @@
 <div *ngIf="!isLoading" >
   <app-add-edit-commande [selectedClient]="listeCommande.client" [editMode]="0" [commande]="null"></app-add-edit-commande>
   <app-commande-item
+    [selectedClient]="listeCommande.client"
     [commande]="commande"
     [index]="i"
     *ngFor="let commande of listeCommande.commandes; let i = index "></app-commande-item>

@@ -10,6 +10,7 @@ import {Client} from "../../models/client";
 export class CommandeItemComponent implements OnInit {
   index1 = 0;
   @Input() commande: Commande;
+  @Input() selectedClient: Client;
   @Input() index: number;
   constructor() { }
 

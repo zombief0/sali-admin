@@ -5,6 +5,17 @@
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 <nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+<div nz-col class="gutter-row" [nzSpan]="8">
+  <nz-upload *ngIf="!isLoading"
+    [nzAction]="urlBaseExcel"
+    (nzChange)="handleChange($event)"
+  >
+    <button nz-button style="margin-bottom: 15px;">
+      <i nz-icon nzType="upload"></i>
+      Charger fichier excel
+    </button>
+  </nz-upload>
+</div>
 <app-add-commande-with-client *ngIf="!isLoading"></app-add-commande-with-client>
 <nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
   <thead>
@@ -25,12 +36,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of nzTable.data">
+  <tr *ngFor="let data of nzTable.data" [style]="'background-color:' + getBackgroundColor(data) + ';'">
     <td>{{data.id}}</td>
     <td>
-      <a [routerLink]="['/client/' + data.client.id + '/commandes/' + data.client.noms + '/'
-      + data.client.prenoms]">
-        {{ data.client.noms }} {{data.client.prenoms}}
+      <a [routerLink]="['/client/' + data.client.id + '/commandes']">
+        {{data.client.sexe == 'FEMININ' ? 'Mme.' : 'M.'}} {{ data.client.noms }}
       </a>
 
     </td>

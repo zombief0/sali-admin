@@ -36,6 +36,7 @@ import {AddEditMesureComponent} from "../add-edit-mesure/add-edit-mesure.compone
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {AddCommandeWithClientComponent} from "../add-commande-with-client/add-commande-with-client.component";
+import {TypeMesureFilter} from "../add-edit-mesure/TypeMesureFilter";
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {AddCommandeWithClientComponent} from "../add-commande-with-client/add-co
     ListeClientComponent,
     ClientCommandesComponent,
     MesureFilter,
+    TypeMesureFilter,
     CommandeItemComponent,
     ListeCommandeComponent,
     DetailsCommandeComponent,

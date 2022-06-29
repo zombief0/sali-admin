@@ -18,7 +18,8 @@
         Type Vêtement
       </nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ce champ est invalide">
-        <nz-radio-group formControlName="typeVetement" id="typeVetement">
+        <nz-radio-group formControlName="typeVetement"
+                        id="typeVetement" (change)="loadType()">
           <label nz-radio nzValue="CHEMISE">Chemise</label>
           <label nz-radio nzValue="PANTALON">Pantalon</label>
           <label nz-radio nzValue="VESTE">Veste</label>
@@ -29,20 +30,8 @@
       <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="typeMesure">Type Mésure</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-select formControlName="typeMesure" id="typeMesure">
-          <nz-option nzValue="AB" nzLabel="AB"></nz-option>
-          <nz-option nzValue="B" nzLabel="B"></nz-option>
-          <nz-option nzValue="C" nzLabel="C"></nz-option>
-          <nz-option nzValue="CA" nzLabel="CA"></nz-option>
-          <nz-option nzValue="CD" nzLabel="CD"></nz-option>
-          <nz-option nzValue="COL" nzLabel="COL"></nz-option>
-          <nz-option nzValue="E" nzLabel="E"></nz-option>
-          <nz-option nzValue="L" nzLabel="L"></nz-option>
-          <nz-option nzValue="LM" nzLabel="LM"></nz-option>
-          <nz-option nzValue="P" nzLabel="P"></nz-option>
-          <nz-option nzValue="T" nzLabel="T"></nz-option>
-          <nz-option nzValue="TM" nzLabel="TM"></nz-option>
-          <nz-option nzValue="V" nzLabel="V"></nz-option>
-          <nz-option nzValue="m" nzLabel="m"></nz-option>
+          <nz-option *ngFor="let tyM of typeMesureChemise | typeMesureFilter: validateForm.value.typeVetement" [nzValue]="tyM" [nzLabel]="tyM">
+          </nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>

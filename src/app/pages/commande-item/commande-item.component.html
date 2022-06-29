@@ -1,6 +1,8 @@
 <nz-card style="margin-top: 15px;" *ngIf="commande" [nzTitle]="'Commande ' + (index + 1) ">
   <div style="font-size:14px;color:rgba(0, 0, 0, 0.85);margin-bottom:16px;font-weight: 500;">
-    <app-add-edit-commande [commande]="commande" [editMode]="1"></app-add-edit-commande>
+    <app-add-edit-commande
+      [selectedClient]="selectedClient"
+      [commande]="commande" [editMode]="1"></app-add-edit-commande>
     <div nz-row [nzGutter]="16">
       <div nz-col class="gutter-row" [nzSpan]="6">Date commande: {{commande.dateCommande}}</div>
       <div nz-col class="gutter-row" [nzSpan]="6">Date retrait: {{commande.dateRetrait}}</div>
@@ -9,7 +11,8 @@
     </div>
     <div nz-row [nzGutter]="16">
       <div nz-col class="gutter-row" [nzSpan]="6">Coût total: {{commande.coutTotal}} FCFA</div>
-      <div nz-col class="gutter-row" [nzSpan]="18">Notes: {{commande.notes}}</div>
+      <div nz-col class="gutter-row" [nzSpan]="6">Echeance: {{commande.echeance}}</div>
+      <div nz-col class="gutter-row" [nzSpan]="12">Notes: {{commande.notes}}</div>
     </div>
     <app-add-edit-mesure [mesure]="null" [editMode]="0" [idCommande]="commande.id">
 

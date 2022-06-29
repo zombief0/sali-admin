@@ -5,18 +5,8 @@
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 <div nz-row>
-  <div nz-col class="gutter-row" [nzSpan]="8">
-    <nz-upload
-      [nzAction]="urlBaseExcel"
-      (nzChange)="handleChange($event)"
-    >
-      <button nz-button style="margin-bottom: 15px;">
-        <i nz-icon nzType="upload"></i>
-        Charger fichier excel
-      </button>
-    </nz-upload>
-  </div>
-  <div nz-col class="gutter-row" [nzSpan]="8" nzOffset="8">
+
+  <div nz-col class="gutter-row" [nzSpan]="8" nzOffset="16">
     <app-add-edit-client [editMode]="0" [client]="null"></app-add-edit-client>
   </div>
 </div>
@@ -31,7 +21,7 @@
         <i nz-icon nzType="search"></i>
       </nz-filter-trigger>
     </th>
-    <th>Prenom</th>
+    <th>Prénoms</th>
     <th>Téléphone</th>
     <th>Email</th>
     <th>Anniversaire</th>
@@ -40,7 +30,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of nzTable.data">
-    <td>{{ data.noms }}</td>
+    <td>{{data.sexe == 'FEMININ' ? 'Mme.' : 'M.'}} {{ data.noms }}</td>
     <td>{{ data.prenoms }}</td>
     <td>{{ data.telephone }}</td>
     <td>{{ data.email }}</td>

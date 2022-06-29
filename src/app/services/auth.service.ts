@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import {UserModel} from "../models/user.model";
 import {AuthResponseModel} from "../models/auth-response.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Router, UrlTree} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'

@@ -26,6 +26,15 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sexe">Sexe</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="sexe" id="sexe">
+          <label nz-radio nzValue="FEMININ">F</label>
+          <label nz-radio nzValue="MASCULIN">M</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="telephone">Téléphone</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ce champ est invalide">
         <input nz-input formControlName="telephone" id="telephone"/>

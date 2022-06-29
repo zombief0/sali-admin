@@ -27,6 +27,7 @@ export class AddEditClientComponent implements OnInit {
       this.validateForm = this.fb.group({
         email: [null, [Validators.email]],
         noms: [null, [Validators.required]],
+        sexe: ['FEMININ', [Validators.required]],
         prenoms: [null],
         telephone: [null, [Validators.required]],
         anniversaire: [null],
@@ -35,6 +36,7 @@ export class AddEditClientComponent implements OnInit {
       this.validateForm = this.fb.group({
         email: [this.client.email, [Validators.email]],
         noms: [this.client.noms, [Validators.required]],
+        sexe: [this.client.sexe, [Validators.required]],
         prenoms: [this.client.prenoms],
         telephone: [this.client.telephone, [Validators.required]],
         anniversaire: [this.client.anniversaire],
@@ -93,6 +95,7 @@ export class AddEditClientComponent implements OnInit {
         })
       }
     } else {
+      this.isOkLoading = false;
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
