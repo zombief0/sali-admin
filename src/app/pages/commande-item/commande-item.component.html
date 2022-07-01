@@ -43,8 +43,9 @@
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu nzSelectable>
-            <app-add-edit-mesure [mesure]="mesure" [editMode]="1" [idCommande]="commande.id"></app-add-edit-mesure>
-            <li nz-menu-item>Supprimer</li>
+            <app-add-edit-mesure [mesure]="mesure" [editMode]="1"
+                                 [idCommande]="commande.id"></app-add-edit-mesure>
+            <li nz-menu-item (click)="deleteMesure(mesure)">Supprimer</li>
           </ul>
         </nz-dropdown-menu>
       </div>
