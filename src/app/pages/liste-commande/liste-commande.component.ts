@@ -70,23 +70,36 @@ export class ListeCommandeComponent implements OnInit {
   getBackgroundColor(commande: Commande): string {
     let dateEcheance = new Date(commande.dateCommande);
     let dateActuelle = new Date();
-    dateActuelle.setHours(17, 0,0);
+    dateActuelle.setHours(17, 0, 0);
     switch (commande.echeance) {
       case 'H24':
         dateEcheance = new Date(dateEcheance.getTime() + 24 * 3600 * 1000);
-        if (dateActuelle.getTime() <= dateEcheance.getTime())
-          return 'tomato';
         break;
       case 'H48':
         dateEcheance = new Date(dateEcheance.getTime() + 48 * 3600 * 1000);
-        if (dateActuelle.getTime() <= dateEcheance.getTime())
-          return '#FFFE71';
         break;
       case 'H72':
         dateEcheance = new Date(dateEcheance.getTime() + 72 * 3600 * 1000);
-        if (dateActuelle.getTime() <= dateEcheance.getTime())
-          return '#299617';
         break;
+    }
+
+    const nombreMsRestantes = dateEcheance.getTime() - dateActuelle.getTime();
+    if (dateActuelle.getTime() <= dateEcheance.getTime() &&
+      nombreMsRestantes <= 24 * 3600 * 1000
+    ) {
+      return 'tomato';
+    }
+
+    if (dateActuelle.getTime() <= dateEcheance.getTime() &&
+      nombreMsRestantes <= 48 * 3600 * 1000
+    ) {
+      return '#FFFE71';
+    }
+
+    if (dateActuelle.getTime() <= dateEcheance.getTime() &&
+      nombreMsRestantes <= 72 * 3600 * 1000
+    ) {
+      return '#299617';
     }
     return 'white';
   }
