@@ -12,5 +12,8 @@ export class Commande {
   notes: string;
   reste: number;
   echeance: string;
-  useMesureStandard: boolean;
+  useMesureStandardPantalon: boolean;
+  useMesureStandardChemise: boolean;
+  useMesureStandardVeste: boolean;
+  livrer: boolean;
 }

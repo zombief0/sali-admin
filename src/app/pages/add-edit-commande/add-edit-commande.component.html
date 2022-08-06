@@ -17,17 +17,17 @@
   [nzOkLoading]="isOkLoading"
 >
   <form *nzModalContent nz-form [formGroup]="validateForm">
-    <nz-form-item>
+    <nz-form-item >
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Date de la commande</nz-form-label>
       <nz-form-control [nzSm]="16" [nzXs]="24">
-        <nz-date-picker style="width: 90% " formControlName="dateCommande"></nz-date-picker>
+        <nz-date-picker (nzOnOpenChange)="updateDateRetrait()" style="width: 90% " formControlName="dateCommande"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="echeance">Écheance</nz-form-label>
       <nz-form-control [nzSm]="16" [nzXs]="24">
-        <nz-radio-group formControlName="echeance" id="echeance" style="width: 90% ">
+        <nz-radio-group (ngModelChange)="updateDateRetrait()" formControlName="echeance" id="echeance" style="width: 90% ">
           <label nz-radio nzValue="HNONE">Aucune</label>
           <label nz-radio nzValue="H24">24h</label>
           <label nz-radio nzValue="H48">48h</label>
@@ -46,7 +46,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="coutTotal">Coût total</nz-form-label>
       <nz-form-control [nzSm]="16" [nzXs]="24">
-        <nz-input-number style="width: 90% "
+        <nz-input-number (change)="updateReste()" style="width: 90% "
                          formControlName="coutTotal"
                          [nzMin]="0"  [nzStep]="1" id="coutTotal"></nz-input-number>
       </nz-form-control>
@@ -55,8 +55,16 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="avance">Avance</nz-form-label>
       <nz-form-control [nzSm]="16" [nzXs]="24">
-        <nz-input-number style="width: 90% " formControlName="avance" [nzMin]="0"
+        <nz-input-number (change)="updateReste()" style="width: 90% " formControlName="avance" [nzMin]="0"
                          [nzStep]="1" id="avance"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reste">Reste</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" >
+        <nz-input-number style="width: 90% " formControlName="reste" [nzMin]="0" [nzDisabled] = 'true'
+                         [nzStep]="1" id="reste"></nz-input-number>
       </nz-form-control>
     </nz-form-item>
 
@@ -73,10 +81,40 @@
                      nzRequired
                      nzTooltipTitle="Utiliser des mesures du client déjà existantes"
                      [nzTooltipIcon]="tooltipIcon"
-                     nzFor="mesureStandards">Mesures standards
+                     nzFor="mesureStandards">Mesures pantalon
       </nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-radio-group formControlName="useMesureStandard" id="mesureStandards">
+        <nz-radio-group formControlName="useMesureStandardPantalon" id="mesureStandards">
+          <label nz-radio [nzValue]="false">Non</label>
+          <label nz-radio [nzValue]="true">Oui</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24"
+                     nzRequired
+                     nzTooltipTitle="Utiliser des mesures du client déjà existantes"
+                     [nzTooltipIcon]="tooltipIcon"
+                     nzFor="mesureStandardsVeste">Mesures veste
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="useMesureStandardVeste" id="mesureStandardsVeste">
+          <label nz-radio [nzValue]="false">Non</label>
+          <label nz-radio [nzValue]="true">Oui</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24"
+                     nzRequired
+                     nzTooltipTitle="Utiliser des mesures du client déjà existantes"
+                     [nzTooltipIcon]="tooltipIcon"
+                     nzFor="mesureStandardsChemise">Mesures chemise
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="useMesureStandardChemise" id="mesureStandardsChemise">
           <label nz-radio [nzValue]="false">Non</label>
           <label nz-radio [nzValue]="true">Oui</label>
         </nz-radio-group>

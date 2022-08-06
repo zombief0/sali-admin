@@ -41,7 +41,9 @@ export class AddCommandeWithClientComponent implements OnInit {
       coutTotal: [null],
       notes: [null],
       echeance: ['HNONE', [Validators.required]],
-      useMesureStandard: [false, [Validators.required]],
+      useMesureStandardPantalon: [false, [Validators.required]],
+      useMesureStandardChemise: [false, [Validators.required]],
+      useMesureStandardVeste: [false, [Validators.required]],
     });
     this.clientService.getAllClient().subscribe({
       next: value => {
@@ -63,13 +65,21 @@ export class AddCommandeWithClientComponent implements OnInit {
       this.commande = this.validateForm.value;
       const client = this.validateForm.value.client;
       this.commande.client = null;
-      if (this.validateForm.value.coutTotal != null
-        && this.validateForm.value.avance != null) {
-        this.validateForm.value.reste = this.validateForm.value.coutTotal - this.validateForm.value.avance;
+
+      if (this.validateForm.value.useMesureStandardPantalon && !client.existMesureStandardPantalon) {
+        this.msg.error('Ce client ne possède pas de mesures standards pantalon' );
+        this.isOkLoading = false;
+        return;
       }
 
-      if (this.validateForm.value.mesureStandards && !client.existMesureStandard) {
-        this.msg.error('Ce client ne possède pas de mesures standards' );
+      if (this.validateForm.value.useMesureStandardVeste && !client.existMesureStandardVeste) {
+        this.msg.error('Ce client ne possède pas de mesures standards veste' );
+        this.isOkLoading = false;
+        return;
+      }
+
+      if (this.validateForm.value.useMesureStandardChemise && !client.existMesureStandardChemise) {
+        this.msg.error('Ce client ne possède pas de mesures standards chemise' );
         this.isOkLoading = false;
         return;
       }
@@ -105,4 +115,38 @@ export class AddCommandeWithClientComponent implements OnInit {
     this.isVisible = true;
   }
 
+  updateDateRetrait() {
+    if (this.validateForm.value.dateCommande != null) {
+      let dateRetrait = new Date(this.validateForm.value.dateCommande);
+      switch (this.validateForm.value.echeance){
+
+        case 'H24':
+          dateRetrait.setTime(dateRetrait.getTime() + 24 * 3600 * 1000);
+          this.validateForm.controls['dateRetrait'].setValue(dateRetrait);
+          this.validateForm.controls['dateRetrait'].disable({onlySelf: true});
+
+
+          break;
+        case 'H48':
+          dateRetrait.setTime(dateRetrait.getTime() + 48 * 3600 * 1000);
+          this.validateForm.controls['dateRetrait'].setValue(dateRetrait);
+          break;
+        case 'H72':
+          dateRetrait.setTime(dateRetrait.getTime() + 72 * 3600 * 1000);
+          this.validateForm.controls['dateRetrait'].setValue(dateRetrait);
+
+          break;
+        case 'HNONE':
+          this.validateForm.controls['dateRetrait'].setValue('');
+          break;
+      }
+    }
+
+  }
+
+  updateReste() {
+    if (this.validateForm.value.coutTotal != null && this.validateForm.value.avance != null) {
+      this.validateForm.controls['reste'].setValue(this.validateForm.value.coutTotal - this.validateForm.value.avance);
+    }
+  }
 }

@@ -8,5 +8,7 @@ export class Client {
   prenoms:	string;
   telephone:	string;
   sexe: string;
-  existMesureStandard: boolean;
+  existMesureStandardPantalon: boolean;
+  existMesureStandardChemise: boolean;
+  existMesureStandardVeste: boolean;
 }

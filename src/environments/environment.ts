@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'https://apisali.normanmbouende.com/api/',
+  baseApiUrl: 'http://localhost:8086/api/',
 };
 
 /*

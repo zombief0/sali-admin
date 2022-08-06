@@ -20,9 +20,6 @@
 <nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
   <thead>
   <tr>
-    <th>
-      Ids
-    </th>
     <th nzCustomFilter>
       Client
       <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
@@ -32,12 +29,13 @@
     <th>Date commande</th>
     <th>Date retrait</th>
     <th>Coût Total</th>
+    <th>Reste</th>
+    <th>Livrer?</th>
     <th>Actions</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of nzTable.data" [style]="'background-color:' + getBackgroundColor(data) + ';'">
-    <td>{{data.id}}</td>
     <td>
       <a [routerLink]="['/client/' + data.client.id + '/commandes']">
         {{data.client.sexe == 'FEMININ' ? 'Mme.' : 'M.'}} {{ data.client.noms }}
@@ -47,6 +45,11 @@
     <td>{{ data.dateCommande| date:'fullDate':'+0200':'fr' }}</td>
     <td>{{ data.dateRetrait | date:'fullDate':'+0200':'fr'}}</td>
     <td>{{ data.coutTotal }}</td>
+    <td>{{ data.reste }}</td>
+    <td>
+      <i *ngIf="data.livrer" style="font-size: 30px;" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'green'"></i>
+      <i *ngIf="!data.livrer" style="font-size: 30px;" nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
+    </td>
     <td><a [routerLink]="['/commande/' + data.id]">
       Détails
     </a>
