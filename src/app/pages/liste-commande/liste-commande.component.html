@@ -50,9 +50,20 @@
       <i *ngIf="data.livrer" style="font-size: 30px;" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'green'"></i>
       <i *ngIf="!data.livrer" style="font-size: 30px;" nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
     </td>
-    <td><a [routerLink]="['/commande/' + data.id]">
-      Détails
+    <td>
+
+      <a [routerLink]="['/commande/' + data.id]">
+        <i nz-icon style="font-size: 30px;" nz-tooltip nzTooltipTitle="Détails" nzType="arrows-alt" nzTheme="outline"></i>
     </a>
+      <div style="display: inline" (click)="livrerNonLivrer(data)">
+        <i  style="font-size: 30px;"  nz-tooltip nzTooltipTitle="Marquer comme étant non livré"
+            *ngIf="data.livrer" nz-icon nzType="dislike"
+            [nzTwotoneColor]="'red'" nzTheme="twotone"></i>
+        <i style="font-size: 30px;"  *ngIf="!data.livrer"
+           nz-tooltip nzTooltipTitle="Marquer comme étant livrer"
+           nz-icon nzType="like" nzTheme="twotone"></i>
+      </div>
+
     </td>
   </tr>
   </tbody>

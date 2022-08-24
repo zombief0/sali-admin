@@ -32,4 +32,8 @@ export class CommandeService {
   updateCommande(id: number, commande: Commande): Observable<MessageModel> {
     return this.http.put<MessageModel>(this.COMMANDE_URL + id, commande);
   }
+
+  livrerCommande(id: number): Observable<any>{
+    return this.http.patch<any>(this.COMMANDE_URL + "livrer-non-livrer/" + id, null);
+  }
 }

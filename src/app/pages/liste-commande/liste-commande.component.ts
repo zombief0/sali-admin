@@ -103,4 +103,17 @@ export class ListeCommandeComponent implements OnInit {
     }
     return 'white';
   }
+
+  livrerNonLivrer(commande: Commande): void {
+    this.commandeService.livrerCommande(commande.id).subscribe(
+      {
+        next: value => {
+          commande.livrer = !commande.livrer;
+        },
+        error: err => {
+          console.log(err);
+        }
+      }
+    );
+  }
 }
