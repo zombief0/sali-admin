@@ -5,17 +5,40 @@
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 <nz-spin nzSimple *ngIf="isLoading"></nz-spin>
-<div nz-col class="gutter-row" [nzSpan]="8">
-  <nz-upload *ngIf="!isLoading"
-    [nzAction]="urlBaseExcel"
-    (nzChange)="handleChange($event)"
-  >
-    <button nz-button style="margin-bottom: 15px;">
-      <i nz-icon nzType="upload"></i>
-      Charger fichier excel
-    </button>
-  </nz-upload>
-</div>
+
+<button *ngIf="!isLoading" nz-button nz-dropdown [nzDropdownMenu]="menu4">
+  Charger fichier excel
+  <span nz-icon nzType="down"></span>
+</button>
+<nz-dropdown-menu #menu4="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>
+      <nz-upload *ngIf="!isLoading"
+                 [nzAction]="urlBaseExcel"
+                 (nzChange)="handleChange($event)"
+      >
+
+        <i nz-icon nzType="upload"></i>
+        Anciennes commandes
+
+
+      </nz-upload>
+    </li>
+    <li nz-menu-item>
+      <nz-upload *ngIf="!isLoading"
+                 [nzAction]="urlBaseExcelNew"
+                 (nzChange)="handleChange($event)"
+      >
+
+        <i nz-icon nzType="upload"></i>
+        Nouvelles commandes
+
+
+      </nz-upload>
+    </li>
+  </ul>
+</nz-dropdown-menu><br><br>
+
 <app-add-commande-with-client *ngIf="!isLoading"></app-add-commande-with-client>
 <nz-table *ngIf="!isLoading" #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
   <thead>
@@ -47,19 +70,22 @@
     <td>{{ data.coutTotal }}</td>
     <td>{{ data.reste }}</td>
     <td>
-      <i *ngIf="data.livrer" style="font-size: 30px;" nz-icon nzType="check-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'green'"></i>
-      <i *ngIf="!data.livrer" style="font-size: 30px;" nz-icon nzType="close-circle" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
+      <i *ngIf="data.livrer" style="font-size: 30px;" nz-icon nzType="check-circle" [nzTheme]="'twotone'"
+         [nzTwotoneColor]="'green'"></i>
+      <i *ngIf="!data.livrer" style="font-size: 30px;" nz-icon nzType="close-circle" [nzTheme]="'twotone'"
+         [nzTwotoneColor]="'red'"></i>
     </td>
     <td>
 
       <a [routerLink]="['/commande/' + data.id]">
-        <i nz-icon style="font-size: 30px;" nz-tooltip nzTooltipTitle="Détails" nzType="arrows-alt" nzTheme="outline"></i>
-    </a>
+        <i nz-icon style="font-size: 30px;" nz-tooltip nzTooltipTitle="Détails" nzType="arrows-alt"
+           nzTheme="outline"></i>
+      </a>
       <div style="display: inline" (click)="livrerNonLivrer(data)">
-        <i  style="font-size: 30px;"  nz-tooltip nzTooltipTitle="Marquer comme étant non livré"
-            *ngIf="data.livrer" nz-icon nzType="dislike"
-            [nzTwotoneColor]="'red'" nzTheme="twotone"></i>
-        <i style="font-size: 30px;"  *ngIf="!data.livrer"
+        <i style="font-size: 30px;" nz-tooltip nzTooltipTitle="Marquer comme étant non livré"
+           *ngIf="data.livrer" nz-icon nzType="dislike"
+           [nzTwotoneColor]="'red'" nzTheme="twotone"></i>
+        <i style="font-size: 30px;" *ngIf="!data.livrer"
            nz-tooltip nzTooltipTitle="Marquer comme étant livrer"
            nz-icon nzType="like" nzTheme="twotone"></i>
       </div>

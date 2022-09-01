@@ -19,6 +19,7 @@ export class ListeCommandeComponent implements OnInit {
   listOfDisplayData = [];
   visible = false;
   urlBaseExcel = environment.baseApiUrl + "excel";
+  urlBaseExcelNew = environment.baseApiUrl + "excel/new";
 
   constructor(private commandeService: CommandeService,
               private msg: NzMessageService, private router: Router) {
@@ -70,7 +71,7 @@ export class ListeCommandeComponent implements OnInit {
   getBackgroundColor(commande: Commande): string {
     let dateEcheance = new Date(commande.dateCommande);
     let dateActuelle = new Date();
-    dateActuelle.setHours(17, 0, 0);
+    dateActuelle.setHours(18, 0, 0);
     switch (commande.echeance) {
       case 'H24':
         dateEcheance = new Date(dateEcheance.getTime() + 24 * 3600 * 1000);
